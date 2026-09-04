@@ -131,6 +131,15 @@ export default function Hero() {
           transformOrigin: '50% 50%',
         })
 
+        /* Hover scale effect */
+        const el = circularTextRef.current
+        el.addEventListener('mouseenter', () => {
+          gsap.to(el, { scale: 1.15, duration: 0.3, ease: 'back.out(1.5)' })
+        })
+        el.addEventListener('mouseleave', () => {
+          gsap.to(el, { scale: 1, duration: 0.3, ease: 'expo.out' })
+        })
+
         /* Fade out on scroll > 150px */
         gsap.to(circularTextRef.current, {
           opacity: 0,
@@ -299,7 +308,21 @@ export default function Hero() {
       </div>
 
       {/* Circular "Scroll to explore" — bottom right */}
-      <div ref={circularTextRef} className="circular-scroll-text">
+      <button
+        ref={circularTextRef}
+        className="circular-scroll-text"
+        data-cursor="pointer"
+        onClick={() => {
+          const aboutEl = document.getElementById('about')
+          if (aboutEl) aboutEl.scrollIntoView({ behavior: 'smooth' })
+        }}
+        style={{
+          background: 'none',
+          border: 'none',
+          padding: 0,
+          cursor: 'none',
+        }}
+      >
         <svg viewBox="0 0 100 100">
           <defs>
             <path
@@ -308,12 +331,10 @@ export default function Hero() {
             />
           </defs>
           <text>
-            <textPath href="#scrollCircle" startOffset="0%">
-              SCROLL TO EXPLORE ✦ SCROLL TO EXPLORE ✦
-            </textPath>
+            <textPath href="#scrollCircle" startOffset="0%">{"SCROLL TO EXPLORE \u2022 SCROLL TO EXPLORE \u2022 "}</textPath>
           </text>
         </svg>
-      </div>
+      </button>
     </section>
   )
 }

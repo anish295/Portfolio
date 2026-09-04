@@ -12,6 +12,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      data-cursor="pointer"
       style={{
         position: 'relative',
         display: 'flex',
@@ -23,7 +24,7 @@ export default function ThemeToggle() {
         border: isDark
           ? '1px solid rgba(255,255,255,0.1)'
           : '1px solid rgba(139,69,19,0.2)',
-        cursor: 'pointer',
+        cursor: 'none',
         padding: '4px',
         transition: 'background 0.4s ease',
         flexShrink: 0,

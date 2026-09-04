@@ -74,20 +74,15 @@ const SKILL_CARDS = [
       },
       {
         name: 'Grok',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Grok_AI_icon.svg/240px-Grok_AI_icon.svg.png',
-        invert: true,
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Grok_logo.svg/120px-Grok_logo.svg.png',
       },
       {
-        name: 'Groq',
+        name: 'Groq SDK',
         logo: 'https://avatars.githubusercontent.com/u/128487927',
       },
       {
         name: 'Copilot',
-        logo: 'https://github.githubassets.com/images/modules/site/copilot/copilot.png',
-      },
-      {
-        name: 'Google GenAI',
-        logo: `${DEVICON}google/google-original.svg`,
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/GitHub_Copilot_logo.svg/120px-GitHub_Copilot_logo.svg.png',
       },
     ],
   },
@@ -193,7 +188,7 @@ export default function Skills() {
         scrollTrigger: {
           trigger: '.skills-heading',
           start: 'top 85%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -206,7 +201,7 @@ export default function Skills() {
           scrollTrigger: {
             trigger: selector,
             start: 'top 82%',
-            toggleActions: 'play none none none',
+            toggleActions: 'play none none reverse',
           },
         })
 
@@ -215,7 +210,7 @@ export default function Skills() {
           scrollTrigger: {
             trigger: selector,
             start: 'top 78%',
-            toggleActions: 'play none none none',
+            toggleActions: 'play none none reverse',
           },
         })
       })

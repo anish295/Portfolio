@@ -85,7 +85,7 @@ export default function Blog() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 80%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -94,7 +94,7 @@ export default function Blog() {
         scrollTrigger: {
           trigger: '.blog-grid',
           start: 'top 80%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
     }, sectionRef)
@@ -176,10 +176,10 @@ export default function Blog() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-6px)'
-                e.currentTarget.style.boxShadow = `0 20px 50px rgba(0,0,0,0.3)`
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'none'
+                e.currentTarget.style.transform = 'translateY(0)'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >

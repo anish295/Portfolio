@@ -5,7 +5,7 @@
    ──────────────────────────────────────────────────────────── */
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import emailjs from 'emailjs-com'
+import emailjs from '@emailjs/browser'
 
 /* ─── EMAILJS SETUP (5 min) ────────────────────────────────────
    1. Go to https://emailjs.com → sign up free
@@ -16,9 +16,9 @@ import emailjs from 'emailjs-com'
    4. Account → API Keys → copy PUBLIC_KEY
    5. Replace the 3 strings below
 ──────────────────────────────────────────────────────────────── */
-const SERVICE_ID  = 'YOUR_SERVICE_ID'   // ← replace
-const TEMPLATE_ID = 'YOUR_TEMPLATE_ID' // ← replace
-const PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'  // ← replace
+const SERVICE_ID  = 'service_95ulz8u'   // ← replace
+const TEMPLATE_ID = 'template_l154bme' // ← replace
+const PUBLIC_KEY  = 'xfaiW2qsupQAls7ja'  // ← replace
 
 const LINKS = [
   {
@@ -80,7 +80,7 @@ export default function Contact() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 80%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -89,7 +89,7 @@ export default function Contact() {
         scrollTrigger: {
           trigger: '.contact-links',
           start: 'top 82%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -98,7 +98,7 @@ export default function Contact() {
         scrollTrigger: {
           trigger: '.contact-form-card',
           start: 'top 82%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
     }, sectionRef)
@@ -109,22 +109,29 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus('sending')
+
     try {
       await emailjs.send(
         SERVICE_ID,
         TEMPLATE_ID,
         {
-          from_name:  formData.name,
+          from_name: formData.name,
           from_email: formData.email,
-          message:    formData.message,
-          to_email:   'k.anish9461@gmail.com',
+          message: formData.message,
         },
-        PUBLIC_KEY
+        {
+          publicKey: PUBLIC_KEY,
+        }
       )
+
       setStatus('sent')
-      setFormData({ name: '', email: '', message: '' })
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+      })
     } catch (err) {
-      console.error(err)
+      console.error('EmailJS error:', err)
       setStatus('error')
     }
   }

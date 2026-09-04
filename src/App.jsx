@@ -2,7 +2,7 @@
    Root layout — ThemeProvider, custom Cursor, ambient orbs,
    film grain, scroll progress bar, and all section components.
    ──────────────────────────────────────────────────────────── */
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ThemeProvider } from './context/ThemeContext'
@@ -22,6 +22,9 @@ function AppContent() {
   const progressRef = useRef(null)
   const orbVioletRef = useRef(null)
   const orbCyanRef = useRef(null)
+
+  /* ── Portfolio mode: 'tech' | 'creative' ── */
+  const [portfolioMode, setPortfolioMode] = useState('tech')
 
   /* ── Scroll Progress Bar ── */
   useEffect(() => {
@@ -65,6 +68,37 @@ function AppContent() {
     return () => ctx.revert()
   }, [])
 
+  /* ── Orb Parallax on Scroll ── */
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const ctx = gsap.context(() => {
+      if (orbVioletRef.current) {
+        gsap.to(orbVioletRef.current, {
+          y: -80, ease: 'none',
+          scrollTrigger: {
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+          },
+        })
+      }
+      if (orbCyanRef.current) {
+        gsap.to(orbCyanRef.current, {
+          y: 60, ease: 'none',
+          scrollTrigger: {
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.5,
+          },
+        })
+      }
+    })
+    return () => ctx.revert()
+  }, [])
+
   return (
     <>
       {/* ── Custom Cursor ── */}
@@ -75,25 +109,59 @@ function AppContent() {
 
       {/* ── Ambient Background ── */}
       <div className="ambient-grid" />
-      <div ref={orbVioletRef} className="ambient-orb ambient-orb--violet" />
-      <div ref={orbCyanRef} className="ambient-orb ambient-orb--cyan" />
+      <div ref={orbVioletRef} className="ambient-orb ambient-orb--violet orb-1" />
+      <div ref={orbCyanRef} className="ambient-orb ambient-orb--cyan orb-2" />
 
       {/* ── Film Grain ── */}
       <div className="film-grain" />
 
       {/* ── Navbar ── */}
-      <Navbar />
+      <Navbar portfolioMode={portfolioMode} setPortfolioMode={setPortfolioMode} />
 
       {/* ── Sections ── */}
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Blog />
-        <Contact />
-      </main>
+      {portfolioMode === 'tech' ? (
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Experience />
+          <Blog />
+          <Contact />
+        </main>
+      ) : (
+        <main>
+          <div
+            style={{
+              minHeight: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              gap: 16,
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(2rem,5vw,3.5rem)',
+                fontWeight: 800,
+              }}
+            >
+              Creative Portfolio
+            </h2>
+            <p
+              style={{
+                color: 'var(--text-muted)',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: '0.9rem',
+              }}
+            >
+              Coming soon — work in progress
+            </p>
+          </div>
+        </main>
+      )}
 
       {/* ── Footer ── */}
       <Footer />

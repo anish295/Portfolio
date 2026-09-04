@@ -714,11 +714,11 @@ img {
 }
 
 .marquee-track--left {
-  animation: marqueeLeft 20s linear infinite;
+  animation: marqueeLeft 40s linear infinite;
 }
 
 .marquee-track--right {
-  animation: marqueeRight 24s linear infinite;
+  animation: marqueeRight 50s linear infinite;
 }
 
 @keyframes marqueeLeft {

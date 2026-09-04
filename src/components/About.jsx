@@ -1,20 +1,12 @@
-/* ─── About.jsx ────────────────────────────────────────────────
-   2-column section: bio + tags left, stats + ALL 3 edu cards right.
-   NO pin. NO scrub. Entrance via ScrollTrigger toggleActions only.
-   Counter animation on stat numbers. NO social links. NO "View Projects".
+/* ─── About.jsx ────────────────────────────────────────────
+   2-column section: bio + tags left, education cards right.
+   NO pin. NO scrub. Entrance via ScrollTrigger toggleActions (reverse).
    ──────────────────────────────────────────────────────────── */
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const TAGS = ['React', 'Node.js', 'AI Integration', 'System Design']
-
-const STATS = [
-  { value: 350, suffix: '+', label: 'LeetCode Problems' },
-  { value: 7.29, suffix: '', label: 'CGPA @ NSUT', decimals: 2 },
-  { value: 2, suffix: '', label: 'Full-Stack Projects' },
-  { value: 96, suffix: '%', label: 'Class X CBSE' },
-]
 
 const EDU = [
   {
@@ -36,7 +28,6 @@ const EDU = [
 
 export default function About() {
   const sectionRef = useRef(null)
-  const statRefs = useRef([])
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -48,7 +39,7 @@ export default function About() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 80%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -58,17 +49,7 @@ export default function About() {
         scrollTrigger: {
           trigger: '.about-text',
           start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      })
-
-      /* Stat cards */
-      gsap.from('.stat-card', {
-        y: 50, opacity: 0, scale: 0.9, stagger: 0.1, duration: 0.7,
-        scrollTrigger: {
-          trigger: '.stat-card',
-          start: 'top 85%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -78,33 +59,8 @@ export default function About() {
         scrollTrigger: {
           trigger: '.edu-card',
           start: 'top 85%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
-      })
-
-      /* Counter animations */
-      statRefs.current.forEach((el, i) => {
-        if (!el) return
-        const stat = STATS[i]
-        const obj = { val: 0 }
-        gsap.to(obj, {
-          val: stat.value,
-          duration: 2,
-          ease: 'expo.out',
-          snap: stat.decimals ? { val: 0.01 } : { val: 1 },
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-          onUpdate: () => {
-            if (stat.decimals) {
-              el.textContent = obj.val.toFixed(stat.decimals) + stat.suffix
-            } else {
-              el.textContent = Math.round(obj.val) + stat.suffix
-            }
-          },
-        })
       })
     }, sectionRef)
 
@@ -144,14 +100,13 @@ export default function About() {
             <p style={{ color: 'var(--text-sub)', marginBottom: 16, lineHeight: 1.8 }}>
               I'm a third-year B.Tech IT student at NSUT, Delhi — deeply focused
               on building full-stack products that combine clean interfaces with
-              powerful backend systems. My work at TeachBetter AI pushed me into
-              designing gamified assessment frameworks from scratch in React.
+              powerful backend systems. At TeachBetter AI, I designed gamified
+              assessment frameworks from scratch in React.
             </p>
             <p style={{ color: 'var(--text-sub)', lineHeight: 1.8 }}>
               I spend my hours integrating AI into developer tooling — from code
-              review engines powered by Groq &amp; Google GenAI to real-time encrypted
-              collaboration platforms. Claude and Copilot are core parts of my
-              daily workflow.
+              review engines to real-time encrypted collaboration platforms. ChatGPT,
+              Claude, and Gemini are central to my daily workflow and problem-solving process.
             </p>
           </div>
 
@@ -179,52 +134,7 @@ export default function About() {
         </div>
 
         {/* ── Right Column ── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {/* 2×2 Stats Grid */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 16,
-            }}
-          >
-            {STATS.map((s, i) => (
-              <div
-                key={s.label}
-                className="stat-card glass-card"
-                style={{ padding: 28, textAlign: 'center' }}
-              >
-                <div
-                  ref={(el) => (statRefs.current[i] = el)}
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontWeight: 800,
-                    fontSize: '2.4rem',
-                    lineHeight: 1,
-                    marginBottom: 8,
-                    background: 'var(--gradient)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  0
-                </div>
-                <div
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.72rem',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {s.label}
-                </div>
-              </div>
-            ))}
-          </div>
-
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Education Cards — all 3 */}
           {EDU.map((edu) => (
             <div

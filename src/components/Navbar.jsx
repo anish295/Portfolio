@@ -1,11 +1,12 @@
 /* ─── Navbar.jsx ──────────────────────────────────────────────
    Fixed, scroll-aware navigation with glassmorphism blur.
-   Layout: [AK.dev] ─── [links center] ─── [ThemeToggle]
+   Layout: [AK.dev] ─── [links center] ─── [PortfolioToggle | ThemeToggle]
    NO résumé button. Uses react-scroll for smooth nav.
    ──────────────────────────────────────────────────────────── */
 import { useState, useEffect } from 'react'
 import { Link as ScrollLink } from 'react-scroll'
 import ThemeToggle from './ThemeToggle'
+import PortfolioToggle from './PortfolioToggle'
 
 const NAV_ITEMS = [
   { label: 'about', to: 'about' },
@@ -16,7 +17,7 @@ const NAV_ITEMS = [
   { label: 'contact', to: 'contact' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ portfolioMode, setPortfolioMode }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -56,9 +57,13 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Right side: ThemeToggle + hamburger */}
+        {/* Right side controls — both toggles vertically centered */}
         <div className="nav-right">
-          <ThemeToggle />
+          <div className="nav-controls">
+            <PortfolioToggle mode={portfolioMode} setMode={setPortfolioMode} />
+            <div className="nav-divider" />
+            <ThemeToggle />
+          </div>
 
           {/* Hamburger (mobile) */}
           <div
@@ -90,10 +95,28 @@ export default function Navbar() {
             {item.label}
           </ScrollLink>
         ))}
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 24, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <PortfolioToggle mode={portfolioMode} setMode={setPortfolioMode} />
           <ThemeToggle />
         </div>
       </div>
+
+      <style>{`
+        .nav-controls {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .nav-divider {
+          width: 1px;
+          height: 22px;
+          background: var(--glass-border);
+          flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+          .nav-controls { display: none; }
+        }
+      `}</style>
     </>
   )
 }

@@ -1,7 +1,7 @@
 /* ─── Projects.jsx ─────────────────────────────────────────────
-   2 tiles side by side. Text on tiles ONLY on hover.
-   Click → fullscreen detail overlay with GitHub/Live links.
-   NO pin. NO scrub. Entrance via ScrollTrigger toggleActions.
+   2 tiles side by side. Screenshot images on tiles.
+   Text on tiles ONLY on hover. Click → fullscreen detail overlay.
+   NO pin. NO scrub. Entrance via ScrollTrigger toggleActions (reverse).
    ──────────────────────────────────────────────────────────── */
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
@@ -12,9 +12,11 @@ const PROJECTS = [
     tagline: 'AI-powered interview prep platform',
     color: 'var(--cyan)',
     glow: 'var(--glow-cyan)',
+    accentColor: 'var(--cyan)',
     tileBg: 'linear-gradient(135deg, #0d1526 0%, #0a2540 60%, #0a1628 100%)',
+    image: '/assets/CodeChemy.png',
     live: 'https://codechemy.netlify.app/',
-    github: 'https://github.com/anish295',
+    github: 'https://github.com/anish295/CodeChemy',
     stack: 'React 19, Vite, Tailwind CSS, Node.js, Express.js, MongoDB, JWT, Groq SDK, Google GenAI SDK',
     pills: ['LeetCode GraphQL API', 'AI Code Review', 'JWT Auth', 'Activity Heatmaps'],
     description:
@@ -26,9 +28,11 @@ const PROJECTS = [
     tagline: 'Zero-footprint encrypted collaboration',
     color: 'var(--violet)',
     glow: 'var(--glow-violet)',
+    accentColor: 'var(--violet)',
     tileBg: 'linear-gradient(135deg, #1a0a2e 0%, #0d0a1e 60%, #0a0d26 100%)',
+    image: '/assets/ShadowRoom.png',
     live: 'https://shadowroom-chat.netlify.app/',
-    github: 'https://github.com/anish295',
+    github: 'https://github.com/anish295/ShadowRoom',
     stack: 'React, Vite, Node.js, Express.js, Socket.io, WebRTC, AES-256, SHA-256',
     pills: ['E2E Encryption', 'P2P File Sharing', 'Zero Accounts', 'WebRTC'],
     description:
@@ -36,6 +40,36 @@ const PROJECTS = [
     techs: ['React', 'Socket.io', 'WebRTC', 'AES-256', 'Node.js'],
   },
 ]
+
+/* ── Project tile image with fallback ── */
+function TileImage({ project }) {
+  const [imgError, setImgError] = useState(false)
+
+  if (imgError) {
+    return (
+      <div
+        style={{
+          position: 'absolute', inset: 0,
+          background: project.tileBg,
+        }}
+      />
+    )
+  }
+
+  return (
+    <img
+      src={project.image}
+      alt={project.name}
+      onError={() => setImgError(true)}
+      style={{
+        position: 'absolute', inset: 0,
+        width: '100%', height: '100%',
+        objectFit: 'cover', objectPosition: 'top',
+        transition: 'transform 0.5s ease',
+      }}
+    />
+  )
+}
 
 /* ── Full-screen detail overlay ── */
 function ProjectDetailOverlay({ project, onClose }) {
@@ -57,6 +91,10 @@ function ProjectDetailOverlay({ project, onClose }) {
     })
   }
 
+  const overlayBg = project.name === 'CodeChemy'
+    ? 'radial-gradient(ellipse at 30% 20%, rgba(0,100,150,0.3) 0%, #070c16 60%)'
+    : 'radial-gradient(ellipse at 70% 20%, rgba(100,0,180,0.3) 0%, #070c16 60%)'
+
   return (
     <div
       ref={overlayRef}
@@ -64,13 +102,31 @@ function ProjectDetailOverlay({ project, onClose }) {
         position: 'fixed',
         inset: 0,
         zIndex: 2000,
-        background: 'rgba(5,8,17,0.97)',
-        backdropFilter: 'blur(20px)',
+        background: overlayBg,
+        backdropFilter: 'blur(2px)',
         overflowY: 'auto',
         padding: '60px 8%',
       }}
     >
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
+      {/* Watermark project name */}
+      <div
+        style={{
+          position: 'fixed', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(6rem,15vw,14rem)',
+          fontWeight: 900,
+          color: 'transparent',
+          WebkitTextStroke: `1px ${project.accentColor}20`,
+          userSelect: 'none',
+          pointerEvents: 'none',
+          letterSpacing: '-0.04em',
+        }}
+      >
+        {project.name}
+      </div>
+
+      <div style={{ maxWidth: 900, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         {/* Top bar */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
           <button
@@ -80,7 +136,7 @@ function ProjectDetailOverlay({ project, onClose }) {
               fontFamily: 'var(--font-mono)',
               fontSize: '0.85rem',
               color: 'var(--text-sub)',
-              cursor: 'pointer',
+              cursor: 'none',
               display: 'flex',
               alignItems: 'center',
               gap: 8,
@@ -235,7 +291,7 @@ export default function Projects() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 85%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
 
@@ -244,7 +300,7 @@ export default function Projects() {
         scrollTrigger: {
           trigger: '.projects-grid',
           start: 'top 80%',
-          toggleActions: 'play none none none',
+          toggleActions: 'play none none reverse',
         },
       })
     }, sectionRef)
@@ -294,48 +350,26 @@ export default function Projects() {
                 data-cursor="pointer"
                 onClick={() => setActiveProject(i)}
                 style={{
-                  aspectRatio: '16 / 10',
+                  aspectRatio: '16 / 9',
                   borderRadius: 20,
                   overflow: 'hidden',
-                  cursor: 'pointer',
+                  cursor: 'none',
                   position: 'relative',
                   border: '1px solid var(--glass-border)',
                   flexShrink: 0,
                 }}
               >
-                {/* Background */}
-                <div
-                  className="tile-bg"
-                  style={{
-                    position: 'absolute', inset: 0,
-                    background: project.tileBg,
-                    transition: 'transform 0.5s ease',
-                  }}
-                />
+                {/* Screenshot image with gradient fallback */}
+                <TileImage project={project} />
 
-                {/* Decorative floating tech names */}
+                {/* Dark overlay gradient for readability */}
                 <div
                   style={{
                     position: 'absolute', inset: 0,
-                    display: 'flex', flexWrap: 'wrap',
-                    alignContent: 'center', justifyContent: 'center',
-                    gap: 16, padding: 32, opacity: 0.07,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.1) 100%)',
                     pointerEvents: 'none',
                   }}
-                >
-                  {project.techs.map((t) => (
-                    <span
-                      key={t}
-                      style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-                        fontWeight: 700, color: '#fff',
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                />
 
                 {/* Glow orb */}
                 <div
@@ -357,14 +391,6 @@ export default function Projects() {
                     padding: 28,
                     opacity: 0,
                     transition: 'opacity 0.35s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = 1
-                    e.currentTarget.previousElementSibling.previousElementSibling.previousElementSibling.style.transform = 'scale(1.05)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = 0
-                    e.currentTarget.previousElementSibling.previousElementSibling.previousElementSibling.style.transform = 'none'
                   }}
                 >
                   <h3
@@ -394,7 +420,7 @@ export default function Projects() {
           @media (max-width: 768px) {
             .projects-grid { grid-template-columns: 1fr !important; }
           }
-          .project-tile:hover .tile-bg { transform: scale(1.05); }
+          .project-tile:hover img { transform: scale(1.05); }
           .project-tile:hover .tile-overlay { opacity: 1 !important; }
         `}</style>
       </section>
