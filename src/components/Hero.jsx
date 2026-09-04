@@ -323,15 +323,21 @@ export default function Hero() {
           cursor: 'none',
         }}
       >
-        <svg viewBox="0 0 100 100">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <path
-              id="scrollCircle"
-              d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+              id="hero-scroll-circle-path"
+              d="M 60,60 m -48,0 a 48,48 0 1,1 96,0 a 48,48 0 1,1 -96,0"
             />
           </defs>
           <text>
-            <textPath href="#scrollCircle" startOffset="0%">{"SCROLL TO EXPLORE \u2022 SCROLL TO EXPLORE \u2022 "}</textPath>
+            <textPath
+              xlinkHref="#hero-scroll-circle-path"
+              href="#hero-scroll-circle-path"
+              startOffset="0%"
+              textLength="294"
+              lengthAdjust="spacing"
+            >{"SCROLL TO EXPLORE \u2022 SCROLL TO EXPLORE \u2022"}</textPath>
           </text>
         </svg>
       </button>

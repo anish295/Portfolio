@@ -256,7 +256,7 @@ export default function Contact() {
                     fontFamily: 'var(--font-mono)', fontSize: '0.82rem',
                     color: 'var(--accent)', padding: '10px 24px',
                     borderRadius: 8, border: '1px solid var(--accent)',
-                    background: 'none', cursor: 'pointer',
+                    background: 'none', cursor: 'none',
                     marginTop: 8, transition: 'all 0.3s',
                   }}
                 >

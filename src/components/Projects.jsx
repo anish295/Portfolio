@@ -92,8 +92,8 @@ function ProjectDetailOverlay({ project, onClose }) {
   }
 
   const overlayBg = project.name === 'CodeChemy'
-    ? 'radial-gradient(ellipse at 30% 20%, rgba(0,100,150,0.3) 0%, #070c16 60%)'
-    : 'radial-gradient(ellipse at 70% 20%, rgba(100,0,180,0.3) 0%, #070c16 60%)'
+    ? 'radial-gradient(ellipse 70% 50% at 20% 0%, rgba(0,100,160,0.5) 0%, transparent 60%), #05080f'
+    : 'radial-gradient(ellipse 70% 50% at 80% 0%, rgba(120,0,200,0.5) 0%, transparent 60%), #05080f'
 
   return (
     <div
@@ -103,7 +103,6 @@ function ProjectDetailOverlay({ project, onClose }) {
         inset: 0,
         zIndex: 2000,
         background: overlayBg,
-        backdropFilter: 'blur(2px)',
         overflowY: 'auto',
         padding: '60px 8%',
       }}
@@ -135,7 +134,7 @@ function ProjectDetailOverlay({ project, onClose }) {
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '0.85rem',
-              color: 'var(--text-sub)',
+              color: '#8b9ab5',
               cursor: 'none',
               display: 'flex',
               alignItems: 'center',
@@ -146,7 +145,7 @@ function ProjectDetailOverlay({ project, onClose }) {
               padding: '8px 0',
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = project.color)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-sub)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#8b9ab5')}
           >
             ← Back
           </button>
@@ -159,9 +158,9 @@ function ProjectDetailOverlay({ project, onClose }) {
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.82rem',
-                color: 'var(--text-sub)',
+                color: '#8b9ab5',
                 padding: '8px 20px',
-                border: '1px solid var(--glass-border)',
+                border: '1px solid rgba(255,255,255,0.12)',
                 borderRadius: 8,
                 transition: 'all 0.3s',
               }}
@@ -170,8 +169,8 @@ function ProjectDetailOverlay({ project, onClose }) {
                 e.currentTarget.style.color = project.color
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--glass-border)'
-                e.currentTarget.style.color = 'var(--text-sub)'
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
+                e.currentTarget.style.color = '#8b9ab5'
               }}
             >
               GitHub ↗
@@ -198,8 +197,15 @@ function ProjectDetailOverlay({ project, onClose }) {
 
         {/* Content card */}
         <div
-          className="glass-card"
-          style={{ padding: '48px 52px', position: 'relative', overflow: 'hidden' }}
+          style={{
+            padding: '48px 52px',
+            position: 'relative',
+            overflow: 'hidden',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.09)',
+            borderRadius: 20,
+            backdropFilter: 'blur(20px)',
+          }}
         >
           {/* Top accent line */}
           <div
@@ -229,6 +235,7 @@ function ProjectDetailOverlay({ project, onClose }) {
           <h3 style={{
             fontFamily: 'var(--font-display)', fontWeight: 800,
             fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.05, marginBottom: 8,
+            color: '#f0f4ff',
           }}>
             {project.name}
           </h3>
@@ -237,7 +244,7 @@ function ProjectDetailOverlay({ project, onClose }) {
             {project.tagline}
           </p>
 
-          <p style={{ color: 'var(--text-sub)', lineHeight: 1.8, maxWidth: 680, marginBottom: 24 }}>
+          <p style={{ color: '#8b9ab5', lineHeight: 1.8, maxWidth: 680, marginBottom: 24 }}>
             {project.description}
           </p>
 
@@ -259,10 +266,10 @@ function ProjectDetailOverlay({ project, onClose }) {
           </div>
 
           {/* Tech stack */}
-          <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: 20 }}>
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 20 }}>
             <div style={{
               fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
-              color: 'var(--text-muted)', lineHeight: 2, letterSpacing: '0.04em',
+              color: '#4a5568', lineHeight: 2, letterSpacing: '0.04em',
             }}>
               {project.stack.split(', ').map((t) => (
                 <span key={t} style={{ marginRight: 8 }}>

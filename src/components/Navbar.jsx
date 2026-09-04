@@ -33,7 +33,11 @@ export default function Navbar({ portfolioMode, setPortfolioMode }) {
     <>
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         {/* Logo */}
-        <div className="nav-logo" data-cursor="pointer">
+        <div
+          className="nav-logo"
+          data-cursor="pointer"
+          style={{ cursor: 'none' }}
+        >
           <span className="logo-cyan">AK</span>
           <span className="logo-muted">.dev</span>
         </div>
@@ -50,6 +54,7 @@ export default function Navbar({ portfolioMode, setPortfolioMode }) {
                 offset={-72}
                 spy
                 data-cursor="pointer"
+                style={{ cursor: 'none' }}
               >
                 {item.label}
               </ScrollLink>
@@ -72,6 +77,8 @@ export default function Navbar({ portfolioMode, setPortfolioMode }) {
             role="button"
             aria-label="Toggle menu"
             tabIndex={0}
+            data-cursor="pointer"
+            style={{ cursor: 'none' }}
           >
             <span />
             <span />

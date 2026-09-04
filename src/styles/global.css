@@ -349,7 +349,7 @@ img {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-sub);
-  cursor: pointer;
+  cursor: none;
   transition: color 0.3s ease;
   background: none;
   border: none;
@@ -371,7 +371,7 @@ img {
   display: none;
   flex-direction: column;
   gap: 5px;
-  cursor: pointer;
+  cursor: none;
   z-index: 1001;
 }
 
@@ -660,8 +660,8 @@ img {
   position: absolute;
   bottom: 40px;
   right: 8%;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   z-index: 2;
   transition: opacity 0.5s ease;
 }
@@ -674,8 +674,8 @@ img {
 .circular-scroll-text text {
   fill: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 5px;
+  font-size: 9.5px;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 

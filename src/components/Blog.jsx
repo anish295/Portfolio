@@ -169,7 +169,7 @@ export default function Blog() {
               style={{
                 padding: 0,
                 overflow: 'hidden',
-                cursor: 'pointer',
+                cursor: 'none',
                 display: 'flex',
                 flexDirection: 'column',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',

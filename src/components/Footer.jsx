@@ -22,7 +22,7 @@ export default function Footer() {
     <footer className="footer">
       {/* Info row */}
       <p className="footer-info">
-        Designed &amp; built by Anish Kumar · React + Vite · 2026
+        Designed &amp; built by Anish Kumar · 2026
       </p>
 
       {/* Marquee Row 1 — left scroll */}
